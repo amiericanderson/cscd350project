@@ -22,52 +22,78 @@ public class CommandInterpreter {
     Time time;
 
 
-    public void evaluate(String command) throws RuntimeException {
-        System.out.println("hello world");
-	    System.out.println("this line is to test commit from teammate.");
-	    System.out.println("testing 123");
-	    System.out.println("cugel the clever");
-    }
+    public class Create{
 
-    //define ship id1 with munition[s] (idn+)
-    public void CommandActorDefineShip(AgentID idn) {
-    }
+    	//define ship id1 with munition[s] (idn+)
+    	public void CommandActorDefineShip(AgentID idn) {
 
-    //create actor id1 from id2 at coordinates with course course speed speed
+    	}
 
-    //set id course course
-    public void CommandActorSetCourse(Course course) {
-	this.course = course;
-    }
+    }//end of Create class
 
-     //set id speed speed
-     public void CommandActorSetSpeed(Groundspeed speed) {
-	this.speed = speed;
-     }
+    public class DefineAndUndefine {
 
-     //set id altitude|depth altitude
-     public void CommandActorSetAltitudeDepth(Altitude altitude) {
-	this.altitude = altitude;
-     }
+    	//define sensor sonar active id with power power sensitivity sensitivity
+    	public void CommandSensorDefineSonarActive(Sensitivity sensitivity) {
 
-     //set id1 deploy munition id2
-     public void CommandActorDeployMunition(AgentID id2) {
+    	}
 
-     }
+    	//define sensor sonar passive id with sensitivity sensitivity
+    	public void CommandSensorDefineSonarPassive(Sensitivity sensitivity) {
 
-     //define sensor sonar active id with power power sensitivity sensitivity
-     public void CommandSensorDefineSonarActive(Sensitivity sensitivity) {
+    	}
 
-     }
+    }//end of DefineAndUndefine class
 
-     //define sensor sonar passive id with sensitivity sensitivity
-     public void CommandSensorDefineSonarPassive(Sensitivity sensitivity) {
+    public class Set {
 
-     }
+    	Groundspeed speed;
+		Course course;
+		Altitude altitude;
 
-     //set update time
-     public void CommandMiscSetUpdate(Time time) {
-	this.time = time;
-     }
+		//set id course course
+    	public void CommandActorSetCourse(Course course) {
+    		this.course = course;
+    	}
+
+    	//set id speed speed
+    	public void CommandActorSetSpeed(Groundspeed speed) {
+    		this.speed = speed;
+    	}
+
+    	//set id altitude|depth altitude
+    	public void CommandActorSetAltitudeDepth(Altitude altitude) {
+    		this.altitude = altitude;
+    	}
+
+    	//set id1 deploy munition id2
+    	public void CommandActorDeployMunition(AgentID id2) {
+
+    	}
+
+    }//end of set class
+
+    public class Misc {
+
+    	Time time;
+
+		//set update time
+    	public void CommandMiscSetUpdate(Time time) {
+    		this.time = time;
+    	}
+
+    }//end of misc class
+
+
+	public void evaluate(String command) throws RuntimeException {
+        System.out.println("Hello World");
+        System.out.println("this line is to test commit from teammate.");
+    	System.out.println("testing 123");
+	}
+
+
+	//create actor id1 from id2 at coordinates with course course speed speed
+
+
 
 }
