@@ -2,9 +2,16 @@ package cs350s21project.cli;
 
 import cs350s21project.controller.CommandManagers;
 import cs350s21project.controller.command.*;
+import cs350s21project.controller.command.actor.CommandActorLoadMunition;
 import cs350s21project.controller.command.misc.CommandMiscExit;
+import cs350s21project.controller.command.misc.CommandMiscLoad;
+import cs350s21project.controller.command.misc.CommandMiscPause;
 import cs350s21project.controller.command.munition.A_CommandMunition;
+import cs350s21project.controller.command.munition.CommandMunitionDefineBomb;
 import cs350s21project.controller.command.munition.CommandMunitionDefineDepthCharge;
+import cs350s21project.controller.command.munition.CommandMunitionDefineShell;
+import cs350s21project.controller.command.sensor.CommandSensorDefineRadar;
+import cs350s21project.controller.command.sensor.CommandSensorDefineThermal;
 import cs350s21project.controller.command.view.A_CommandViewCreate;
 import cs350s21project.controller.command.view.CommandViewCreateWindowTop;
 import cs350s21project.controller.command.view.CommandViewDeleteWindow;
@@ -21,7 +28,7 @@ public class CommandInterpreter {
     DistanceNauticalMiles distance;
     AttitudePitch elevation;
     String filename;
-    FieldOfView fov;
+    static FieldOfView fov;
     AgentID id;
     Latitude latitude;
     Longitude longitude;
@@ -33,8 +40,7 @@ public class CommandInterpreter {
     static A_Command theCommand;
     static CommandManagers managers = CommandManagers.getInstance();
 
-
-    public static class Create{
+	public static class Create{
 
 		public static void evaluateCreateCommand(String cmd) {
 			if( cmd.contains("window") && cmd.contains("top") && cmd.contains("view") && cmd.contains("with")) {
@@ -111,13 +117,14 @@ public class CommandInterpreter {
 			double long3Seconds = Double.valueOf(long3Split3[0]);
 			Longitude longitude3 = new Longitude(long3Degrees, long3Minutes, long3Seconds);
 
-			theCommand = new CommandViewCreateWindowTop(null, cmd, id, topViewSize, latitude1, latitude2, latitude3, longitude1, longitude2, longitude3);
-			//Window window = new Window()
+			theCommand = new CommandViewCreateWindowTop(managers, cmd, id, topViewSize, latitude1, latitude2, latitude3, longitude1, longitude2, longitude3);
 
 		}
 
 		public static void CommandViewDeleteWindow(String cmd) {
-
+			String[] words = cmd.split(" ");
+			AgentID id = new AgentID(words[2]);
+			theCommand = new CommandViewDeleteWindow(managers, cmd, id);
 		}
 
     }//end of Create class
@@ -157,19 +164,34 @@ public class CommandInterpreter {
     	}
 
     	public static void CommandMunitionDefineBomb(String cmd) {
-
+			String[] words = cmd.split(" ");
+			AgentID id = new AgentID(words[3]);
+			theCommand = new CommandMunitionDefineBomb(managers, cmd, id);
 		}
 
 		public static void CommandMunitionDefineShell(String cmd) {
-
+			String[] words = cmd.split(" ");
+			AgentID id = new AgentID(words[3]);
+			theCommand = new CommandMunitionDefineShell(managers, cmd, id);
 		}
 
 		public static void CommandSensorDefineRadar(String cmd) {
-
+			String[] words = cmd.split(" ");
+			AgentID id = new AgentID(words[3]);
+			AngleNavigational angle = new AngleNavigational(Double.valueOf(words[8]));
+			fov = new FieldOfView(angle);
+			Power power = new Power(Double.valueOf(words[10]));
+			Sensitivity sensitivity = new Sensitivity(Double.valueOf(words[12]));
+			theCommand = new CommandSensorDefineRadar(managers, cmd, id, fov, power, sensitivity);
 		}
 
 		public static void CommandSensorDefineThermal(String cmd) {
-
+			String[] words = cmd.split(" ");
+			AgentID id = new AgentID(words[3]);
+			AngleNavigational angle = new AngleNavigational(Double.valueOf(words[8]));
+			fov = new FieldOfView(angle);
+			Sensitivity sensitivity = new Sensitivity(Double.valueOf(words[10]));
+			theCommand = new CommandSensorDefineThermal(managers, cmd, id, fov, sensitivity);
 		}
 
 		//define munition depth_charge id1 with fuze id2
@@ -215,7 +237,10 @@ public class CommandInterpreter {
     	}
 
     	public static void CommandActorLoadMunition(String cmd) {
-
+			String[] words = cmd.split(" ");
+			AgentID id1 = new AgentID(words[1]);
+			AgentID id2 = new AgentID(words[4]);
+			theCommand = new CommandActorLoadMunition(managers, cmd, id1, id2);
 		}
 
     }//end of set class
@@ -246,15 +271,17 @@ public class CommandInterpreter {
     	}
 
     	public static void CommandMiscLoad(String cmd) {
-
+			String[] words = cmd.split(" ");
+			String filename = words[1].substring(1, words[1].length()-1);
+			theCommand = new CommandMiscLoad(managers, cmd, filename);
 		}
 
 		public static void CommandMiscPause(String cmd) {
-
+			theCommand = new CommandMiscPause(managers, cmd);
 		}
 
 		public static void CommandMiscExit(String cmd) {
-
+			theCommand = new CommandMiscExit(managers, cmd);
 		}
 
     }//end of misc class
