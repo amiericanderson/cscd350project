@@ -1,7 +1,10 @@
 package cs350s21project.cli;
 
+import cs350s21project.controller.CommandManagers;
 import cs350s21project.controller.command.*;
 import cs350s21project.controller.command.misc.CommandMiscExit;
+import cs350s21project.controller.command.munition.A_CommandMunition;
+import cs350s21project.controller.command.munition.CommandMunitionDefineDepthCharge;
 import cs350s21project.controller.command.view.A_CommandViewCreate;
 import cs350s21project.controller.command.view.CommandViewCreateWindowTop;
 import cs350s21project.controller.command.view.CommandViewDeleteWindow;
@@ -28,6 +31,7 @@ public class CommandInterpreter {
     Groundspeed speed;
     Time time;
     static A_Command theCommand;
+    static CommandManagers managers = CommandManagers.getInstance();
 
 
     public static class Create{
@@ -166,6 +170,13 @@ public class CommandInterpreter {
 
 		public static void CommandSensorDefineThermal(String cmd) {
 
+		}
+
+		//define munition depth_charge id1 with fuze id2
+		public static void CommandMunitionDefineDepthCharge(java.lang.String command, AgentID idMunition, AgentID idFuze) {
+			A_CommandMunition<CommandMunitionDefineDepthCharge> defineDepthCharge =
+					new CommandMunitionDefineDepthCharge(managers, command, idMunition, idFuze);
+			managers.schedule(defineDepthCharge);
 		}
 
     }//end of DefineAndUndefine class
