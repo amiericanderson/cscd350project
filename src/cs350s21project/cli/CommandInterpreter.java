@@ -1,9 +1,12 @@
 package cs350s21project.cli;
 
+import cs350s21project.controller.command.A_Command;
 import cs350s21project.controller.command.misc.CommandMiscExit;
 import cs350s21project.controller.command.view.CommandViewCreateWindowTop;
 import cs350s21project.controller.command.view.CommandViewDeleteWindow;
 import cs350s21project.datatype.*;
+
+import java.awt.*;
 
 public class CommandInterpreter {
 
@@ -23,6 +26,7 @@ public class CommandInterpreter {
     int size;
     Groundspeed speed;
     Time time;
+    A_Command theCommand;
 
 
     public static class Create{
@@ -43,6 +47,21 @@ public class CommandInterpreter {
     	}
 
     	public static void CommandViewCreateWindowTop(String cmd) {
+			String[] words = cmd.split(" ");
+			AgentID id = new AgentID(words[2]);
+			int topViewSize = Integer.parseInt(words[6]);
+			String lat1 = words[7].substring(1);
+
+			String lat2 = words[8];
+			String lat3 = words[9].substring(0, words[9].length()-1);
+
+			String long1 = words[10].substring(1);
+			String long2 = words[11];
+			String long3 = words[12].substring(0, words[12].length()-1);
+
+
+
+			//Window window = new Window()
 
 		}
 
@@ -175,18 +194,21 @@ public class CommandInterpreter {
 
 
 	public void evaluate(String command) throws RuntimeException {
-        String [] cmd = command.split(" ");
-        if(cmd[0].equals("create") || cmd[0].equals("delete")) {
-        	Create.evaluateCreateCommand(command);
-		}
-		else if(cmd[0].equals("define") || cmd[0].equals("undefine")) {
-			DefineAndUndefine.evaluateDefineCommand(command);
-		}
-		else if(cmd[0].equals("set")) {
-			Set.evaluateSetCommand(command);
-		}
-		else {
-			Misc.evaluateMiscCommand(command);
+
+    	String[] commands = command.split(";");
+
+    	for(int i = 0; i < commands.length; i++) {
+    		String oneCommand = commands[i];
+			String[] cmd = oneCommand.split(" ");
+			if (cmd[0].equals("create") || cmd[0].equals("delete")) {
+				Create.evaluateCreateCommand(oneCommand);
+			} else if (cmd[0].equals("define") || cmd[0].equals("undefine")) {
+				DefineAndUndefine.evaluateDefineCommand(oneCommand);
+			} else if (cmd[0].equals("set")) {
+				Set.evaluateSetCommand(oneCommand);
+			} else {
+				Misc.evaluateMiscCommand(oneCommand);
+			}
 		}
 	}
 
