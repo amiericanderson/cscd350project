@@ -67,16 +67,22 @@ public class CommandInterpreter {
 			else if(cmd.contains("sensor thermal") && cmd.contains("with field of view")) {
 				CommandSensorDefineThermal(cmd);
 			}
+			else if(cmd.contains("sensor sonar") && cmd.contains("active") && cmd.contains("with power")) {
+				CommandSensorDefineSonarActive(cmd);
+			}
+			else if(cmd.contains("sensor sonar") && cmd.contains("passive") && cmd.contains("with sensitivity")) {
+                                CommandSensorDefineSonarPassive(cmd);
+                        }
 
 		}
 
     	//define sensor sonar active id with power power sensitivity sensitivity
-    	public void CommandSensorDefineSonarActive(Sensitivity sensitivity) {
+    	public void CommandSensorDefineSonarActive(String cmd) {
 
     	}
 
     	//define sensor sonar passive id with sensitivity sensitivity
-    	public void CommandSensorDefineSonarPassive(Sensitivity sensitivity) {
+    	public void CommandSensorDefineSonarPassive(String cmd) {
 
     	}
 
@@ -151,11 +157,14 @@ public class CommandInterpreter {
     		else if(cmd.contains("@exit")) {
 				CommandMiscExit(cmd);
 			}
+		else if(cmd.contains("@set update")) {
+			CommandMiscSetUpdate(cmd);
+			}
 
 		}
 
 		//set update time
-    	public void CommandMiscSetUpdate(Time time) {
+    	public static void CommandMiscSetUpdate(String cmd) {
     		this.time = time;
     	}
 
