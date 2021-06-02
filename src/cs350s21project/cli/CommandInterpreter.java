@@ -60,7 +60,7 @@ public class CommandInterpreter {
 			String long3 = words[12].substring(0, words[12].length()-1);
 
 
-
+			//theCommand =  CommandViewCreateWindowTop()
 			//Window window = new Window()
 
 		}
@@ -96,12 +96,12 @@ public class CommandInterpreter {
 		}
 
     	//define sensor sonar active id with power power sensitivity sensitivity
-    	public void CommandSensorDefineSonarActive(String cmd) {
+    	public static void CommandSensorDefineSonarActive(String cmd) {
 
     	}
 
     	//define sensor sonar passive id with sensitivity sensitivity
-    	public void CommandSensorDefineSonarPassive(String cmd) {
+    	public static void CommandSensorDefineSonarPassive(String cmd) {
 
     	}
 
@@ -164,7 +164,7 @@ public class CommandInterpreter {
 
     public static class Misc {
 
-		Time time;
+		static Time time;
 
     	public static void evaluateMiscCommand(String cmd) {
     		if(cmd.contains("@load")) {
@@ -184,7 +184,7 @@ public class CommandInterpreter {
 
 		//set update time
     	public static void CommandMiscSetUpdate(String cmd) {
-    		this.time = time;
+    		time = time;
     	}
 
     	public static void CommandMiscLoad(String cmd) {
@@ -223,7 +223,5 @@ public class CommandInterpreter {
 
 
 	//create actor id1 from id2 at coordinates with course course speed speed
-
-
 
 }
