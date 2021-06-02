@@ -1,5 +1,8 @@
 package cs350s21project.cli;
 
+import cs350s21project.controller.command.misc.CommandMiscExit;
+import cs350s21project.controller.command.view.CommandViewCreateWindowTop;
+import cs350s21project.controller.command.view.CommandViewDeleteWindow;
 import cs350s21project.datatype.*;
 
 public class CommandInterpreter {
@@ -22,24 +25,50 @@ public class CommandInterpreter {
     Time time;
 
 
-    public class Create{
+    public static class Create{
+
+		public static void evaluateCreateCommand(String cmd) {
+			if( cmd.contains("window") && cmd.contains("top") && cmd.contains("view") && cmd.contains("with")) {
+				CommandViewCreateWindowTop(cmd);
+			}
+			else if(cmd.contains("delete") && cmd.contains("window")) {
+				CommandViewDeleteWindow(cmd);
+			}
+
+		}
 
     	//define ship id1 with munition[s] (idn+)
     	public void CommandActorDefineShip(AgentID idn) {
 
     	}
 
-    	public void CommandViewCreateWindowTop(String cmd) {
+    	public static void CommandViewCreateWindowTop(String cmd) {
 
 		}
 
-		public void CommandViewDeleteWindow(String cmd) {
+		public static void CommandViewDeleteWindow(String cmd) {
 
 		}
 
     }//end of Create class
 
-    public class DefineAndUndefine {
+    public static class DefineAndUndefine {
+
+		public static void evaluateDefineCommand(String cmd) {
+			if(cmd.contains("munition") && cmd.contains("bomb")) {
+				CommandMunitionDefineBomb(cmd);
+			}
+			else if(cmd.contains("munition") && cmd.contains("shell")) {
+				CommandMunitionDefineShell(cmd);
+			}
+			else if(cmd.contains("sensor") && cmd.contains("radar") && cmd.contains("with field of view")) {
+				CommandSensorDefineRadar(cmd);
+			}
+			else if(cmd.contains("sensor thermal") && cmd.contains("with field of view")) {
+				CommandSensorDefineThermal(cmd);
+			}
+
+		}
 
     	//define sensor sonar active id with power power sensitivity sensitivity
     	public void CommandSensorDefineSonarActive(Sensitivity sensitivity) {
@@ -51,29 +80,36 @@ public class CommandInterpreter {
 
     	}
 
-    	public void CommandMunitionDefineBomb(String cmd) {
+    	public static void CommandMunitionDefineBomb(String cmd) {
 
 		}
 
-		public void CommandMunitionDefineShell(String cmd) {
+		public static void CommandMunitionDefineShell(String cmd) {
 
 		}
 
-		public void CommandSensorDefineRadar(String cmd) {
+		public static void CommandSensorDefineRadar(String cmd) {
 
 		}
 
-		public void CommandSensorDefineThermal(String cmd) {
+		public static void CommandSensorDefineThermal(String cmd) {
 
 		}
 
     }//end of DefineAndUndefine class
 
-    public class Set {
+    public static class Set {
 
     	Groundspeed speed;
 		Course course;
 		Altitude altitude;
+
+		public static void evaluateSetCommand(String cmd) {
+			if(cmd.contains("load munition")) {
+				CommandActorLoadMunition(cmd);
+			}
+
+		}
 
 		//set id course course
     	public void CommandActorSetCourse(Course course) {
@@ -95,30 +131,43 @@ public class CommandInterpreter {
 
     	}
 
-    	public void CommandActorLoadMunition(String cmd) {
+    	public static void CommandActorLoadMunition(String cmd) {
 
 		}
 
     }//end of set class
 
-    public class Misc {
+    public static class Misc {
 
-    	Time time;
+		Time time;
+
+    	public static void evaluateMiscCommand(String cmd) {
+    		if(cmd.contains("@load")) {
+    			CommandMiscLoad(cmd);
+			}
+    		else if(cmd.contains("@pause")) {
+    			CommandMiscPause(cmd);
+			}
+    		else if(cmd.contains("@exit")) {
+				CommandMiscExit(cmd);
+			}
+
+		}
 
 		//set update time
     	public void CommandMiscSetUpdate(Time time) {
     		this.time = time;
     	}
 
-    	public void CommandMiscLoad(String cmd) {
+    	public static void CommandMiscLoad(String cmd) {
 
 		}
 
-		public void CommandMiscPause(String cmd) {
+		public static void CommandMiscPause(String cmd) {
 
 		}
 
-		public void CommandMiscExit(String cmd) {
+		public static void CommandMiscExit(String cmd) {
 
 		}
 
@@ -126,9 +175,19 @@ public class CommandInterpreter {
 
 
 	public void evaluate(String command) throws RuntimeException {
-        System.out.println("Hello World");
-        System.out.println("this line is to test commit from teammate.");
-    	System.out.println("testing 123");
+        String [] cmd = command.split(" ");
+        if(cmd[0].equals("create") || cmd[0].equals("delete")) {
+        	Create.evaluateCreateCommand(command);
+		}
+		else if(cmd[0].equals("define") || cmd[0].equals("undefine")) {
+			DefineAndUndefine.evaluateDefineCommand(command);
+		}
+		else if(cmd[0].equals("set")) {
+			Set.evaluateSetCommand(command);
+		}
+		else {
+			Misc.evaluateMiscCommand(command);
+		}
 	}
 
 
