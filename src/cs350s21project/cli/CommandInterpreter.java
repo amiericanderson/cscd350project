@@ -29,6 +29,14 @@ public class CommandInterpreter {
 
     	}
 
+    	public void CommandViewCreateWindowTop(String cmd) {
+
+		}
+
+		public void CommandViewDeleteWindow(String cmd) {
+
+		}
+
     }//end of Create class
 
     public class DefineAndUndefine {
@@ -42,6 +50,22 @@ public class CommandInterpreter {
     	public void CommandSensorDefineSonarPassive(Sensitivity sensitivity) {
 
     	}
+
+    	public void CommandMunitionDefineBomb(String cmd) {
+
+		}
+
+		public void CommandMunitionDefineShell(String cmd) {
+
+		}
+
+		public void CommandSensorDefineRadar(String cmd) {
+
+		}
+
+		public void CommandSensorDefineThermal(String cmd) {
+
+		}
 
     }//end of DefineAndUndefine class
 
@@ -71,6 +95,10 @@ public class CommandInterpreter {
 
     	}
 
+    	public void CommandActorLoadMunition(String cmd) {
+
+		}
+
     }//end of set class
 
     public class Misc {
@@ -81,6 +109,18 @@ public class CommandInterpreter {
     	public void CommandMiscSetUpdate(Time time) {
     		this.time = time;
     	}
+
+    	public void CommandMiscLoad(String cmd) {
+
+		}
+
+		public void CommandMiscPause(String cmd) {
+
+		}
+
+		public void CommandMiscExit(String cmd) {
+
+		}
 
     }//end of misc class
 
