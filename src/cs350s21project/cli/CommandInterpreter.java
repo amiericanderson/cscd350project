@@ -64,10 +64,7 @@ public class CommandInterpreter {
 
 		}
 
-    	//define ship id1 with munition[s] (idn+)
-    	public void CommandActorDefineShip(AgentID idn) {
 
-    	}
 
     	public static void CommandViewCreateWindowTop(String cmd) {
 			String[] words = cmd.split(" ");
@@ -320,6 +317,14 @@ public class CommandInterpreter {
 			theCommand = new CommandSensorDefineTime(managers, cmd, idSensor, time);
 		}
 
+		//define ship id1 with munition[s] (idn+)
+    		public static void CommandActorDefineShip(String cmd) {
+    			String[] words = cmd.split(" ");
+    			AgentID id1 = new AgentID(words[1]);
+    			AgentID idn = new AgentID(words[4]);
+    			theCommand = new CommandActorDefineShip(managers, cmd, id1, null);
+    		}
+
     }//end of DefineAndUndefine class
 
     public static class Set {
@@ -508,8 +513,5 @@ public class CommandInterpreter {
 			}
 		}
 	}
-
-
-	//create actor id1 from id2 at coordinates with course course speed speed
 
 }
