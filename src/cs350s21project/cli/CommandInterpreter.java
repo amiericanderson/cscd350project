@@ -407,6 +407,9 @@ public class CommandInterpreter {
 		else if(cmd.contains("@set update")) {
 			CommandMiscSetUpdate(cmd);
 			}
+		else if(cmd.contains("@force")) {
+			CommandActorSetState(cmd);
+			}
 
 		}
 
