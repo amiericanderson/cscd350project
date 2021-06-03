@@ -330,10 +330,6 @@ public class CommandInterpreter {
 
     public static class Set {
 
-    	Groundspeed speed;
-		Course course;
-		Altitude altitude;
-
 		public static void evaluateSetCommand(String cmd) {
 			if(cmd.contains("load munition")) {
 				CommandActorLoadMunition(cmd);
@@ -408,8 +404,6 @@ public class CommandInterpreter {
     }//end of set class
 
     public static class Misc {
-
-		static Time time;
 
     	public static void evaluateMiscCommand(String cmd) {
     		if(cmd.contains("@load")) {
