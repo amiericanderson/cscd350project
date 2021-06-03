@@ -2,16 +2,15 @@ package cs350s21project.cli;
 
 import cs350s21project.controller.CommandManagers;
 import cs350s21project.controller.command.*;
+import cs350s21project.controller.command.actor.CommandActorDeployMunitionShell;
 import cs350s21project.controller.command.actor.CommandActorLoadMunition;
+import cs350s21project.controller.command.actor.CommandActorSetState;
 import cs350s21project.controller.command.misc.CommandMiscExit;
 import cs350s21project.controller.command.misc.CommandMiscLoad;
 import cs350s21project.controller.command.misc.CommandMiscPause;
-import cs350s21project.controller.command.munition.A_CommandMunition;
-import cs350s21project.controller.command.munition.CommandMunitionDefineBomb;
-import cs350s21project.controller.command.munition.CommandMunitionDefineDepthCharge;
-import cs350s21project.controller.command.munition.CommandMunitionDefineShell;
-import cs350s21project.controller.command.sensor.CommandSensorDefineRadar;
-import cs350s21project.controller.command.sensor.CommandSensorDefineThermal;
+import cs350s21project.controller.command.misc.CommandMiscWait;
+import cs350s21project.controller.command.munition.*;
+import cs350s21project.controller.command.sensor.*;
 import cs350s21project.controller.command.view.A_CommandViewCreate;
 import cs350s21project.controller.command.view.CommandViewCreateWindowTop;
 import cs350s21project.controller.command.view.CommandViewDeleteWindow;
@@ -148,8 +147,29 @@ public class CommandInterpreter {
 				CommandSensorDefineSonarActive(cmd);
 			}
 			else if(cmd.contains("sensor sonar") && cmd.contains("passive") && cmd.contains("with sensitivity")) {
-                                CommandSensorDefineSonarPassive(cmd);
-                        }
+				CommandSensorDefineSonarPassive(cmd);
+			}
+			else if(cmd.contains("sensor acoustic")) {
+				CommandSensorDefineAcoustic(cmd);
+			}
+			else if(cmd.contains("sensor depth")) {
+				CommandSensorDefineDepth(cmd);
+			}
+			else if(cmd.contains("sensor distance")) {
+				CommandSensorDefineDistance(cmd);
+			}
+			else if(cmd.contains("sensor time")) {
+				CommandSensorDefineTime(cmd);
+			}
+			else if(cmd.contains("munition depth_charge")) {
+				CommandMunitionDefineDepthCharge(cmd);
+			}
+			else if(cmd.contains("munition torpedo")) {
+				CommandMunitionDefineTorpedo(cmd);
+			}
+			else if(cmd.contains("munition missile")) {
+				CommandMunitionDefineMissile(cmd);
+			}
 
 		}
 
@@ -194,11 +214,57 @@ public class CommandInterpreter {
 			theCommand = new CommandSensorDefineThermal(managers, cmd, id, fov, sensitivity);
 		}
 
-		//define munition depth_charge id1 with fuze id2
-		public static void CommandMunitionDefineDepthCharge(java.lang.String command, AgentID idMunition, AgentID idFuze) {
-			A_CommandMunition<CommandMunitionDefineDepthCharge> defineDepthCharge =
-					new CommandMunitionDefineDepthCharge(managers, command, idMunition, idFuze);
-			managers.schedule(defineDepthCharge);
+		public static void CommandMunitionDefineDepthCharge(String cmd) {
+			String[] words = cmd.split(" ");
+			AgentID idMunition = new AgentID(words[3]);
+			AgentID idFuze = new AgentID(words[6]);
+			theCommand = new CommandMunitionDefineDepthCharge(managers, cmd, idMunition, idFuze);
+		}
+
+		public static void CommandMunitionDefineTorpedo(String cmd) {
+			String[] words = cmd.split(" ");
+			AgentID idMunition = new AgentID(words[3]);
+			AgentID idSensor = new AgentID(words[6]);
+			AgentID idFuze = new AgentID(words[8]);
+			Time time = new Time(Double.parseDouble(words[11]));
+			theCommand = new CommandMunitionDefineTorpedo(managers, cmd, idMunition, idSensor, idFuze, time);
+		}
+
+		public static void CommandMunitionDefineMissile(String cmd) {
+			String[] words = cmd.split(" ");
+			AgentID idMunition = new AgentID(words[3]);
+			AgentID idSensor = new AgentID(words[6]);
+			AgentID idFuze = new AgentID(words[8]);
+			DistanceNauticalMiles distance = new DistanceNauticalMiles(Double.parseDouble(words[11]));
+			theCommand = new CommandMunitionDefineMissile(managers, cmd, idMunition, idSensor, idFuze, distance);
+		}
+
+		public static void CommandSensorDefineAcoustic(String cmd) {
+			String[] words = cmd.split(" ");
+			AgentID idSensor = new AgentID(words[3]);
+			Sensitivity sensitivity = new Sensitivity(Double.parseDouble(words[6]));
+			theCommand = new CommandSensorDefineAcoustic(managers, cmd, idSensor, sensitivity);
+		}
+
+		public static void CommandSensorDefineDepth(String cmd) {
+			String[] words = cmd.split(" ");
+			AgentID idSensor = new AgentID(words[3]);
+			Altitude depth = new Altitude(Double.parseDouble(words[7]));
+			theCommand = new CommandSensorDefineDepth(managers, cmd, idSensor, depth);
+		}
+
+		public static void CommandSensorDefineDistance(String cmd) {
+			String[] words = cmd.split(" ");
+			AgentID idSensor = new AgentID(words[3]);
+			DistanceNauticalMiles distance = new DistanceNauticalMiles(Double.parseDouble(words[7]));
+			theCommand = new CommandSensorDefineDistance(managers, cmd, idSensor, distance);
+		}
+
+		public static void CommandSensorDefineTime(String cmd) {
+			String[] words = cmd.split(" ");
+			AgentID idSensor = new AgentID(words[3]);
+			Time time = new Time(Double.parseDouble(words[7]));
+			theCommand = new CommandSensorDefineTime(managers, cmd, idSensor, time);
 		}
 
     }//end of DefineAndUndefine class
@@ -212,6 +278,9 @@ public class CommandInterpreter {
 		public static void evaluateSetCommand(String cmd) {
 			if(cmd.contains("load munition")) {
 				CommandActorLoadMunition(cmd);
+			}
+			else if(cmd.contains("deploy munition") && cmd.contains("at azimuth")) {
+				CommandActorDeployMunitionShell(cmd);
 			}
 
 		}
@@ -243,6 +312,15 @@ public class CommandInterpreter {
 			theCommand = new CommandActorLoadMunition(managers, cmd, id1, id2);
 		}
 
+		public static void CommandActorDeployMunitionShell(String cmd) {
+			String[] words = cmd.split(" ");
+			AgentID idActor = new AgentID(words[1]);
+			AgentID idMunition = new AgentID(words[4]);
+			AttitudeYaw azimuth = new AttitudeYaw(Double.parseDouble(words[7]));
+			AttitudePitch elevation = new AttitudePitch(Double.parseDouble(words[11]));
+			theCommand = new CommandActorDeployMunitionShell(managers, cmd, idActor, idMunition, azimuth, elevation);
+		}
+
     }//end of set class
 
     public static class Misc {
@@ -255,6 +333,9 @@ public class CommandInterpreter {
 			}
     		else if(cmd.contains("@pause")) {
     			CommandMiscPause(cmd);
+			}
+    		else if(cmd.contains("@wait")) {
+    			CommandMiscWait(cmd);
 			}
     		else if(cmd.contains("@exit")) {
 				CommandMiscExit(cmd);
@@ -278,6 +359,41 @@ public class CommandInterpreter {
 
 		public static void CommandMiscPause(String cmd) {
 			theCommand = new CommandMiscPause(managers, cmd);
+		}
+
+		public static void CommandMiscWait(String cmd) {
+			String[] words = cmd.split(" ");
+			Time time = new Time(Double.parseDouble(words[1]));
+    		theCommand = new CommandMiscWait(managers, cmd, time);
+		}
+
+		public static void CommandActorSetState(String cmd) {
+			String[] words = cmd.split(" ");
+			AgentID id = new AgentID(words[1]);
+
+			String[] coor = words[4].split("/");
+			String lat = coor[0];
+			int degrees = Integer.parseInt(lat.split("\\*")[0]);
+			lat = lat.split("\\*")[1];
+			int minutes = Integer.parseInt(lat.split("'")[0]);
+			lat = lat.split("'")[1];
+			double seconds = Double.parseDouble(lat.split("\"")[0]);
+			Latitude latitude = new Latitude(degrees, minutes, seconds);
+
+			lat = coor[1];
+			degrees = Integer.parseInt(lat.split("\\*")[0]);
+			lat = lat.split("\\*")[1];
+			minutes = Integer.parseInt(lat.split("'")[0]);
+			lat = lat.split("'")[1];
+			seconds = Double.parseDouble(lat.split("\"")[0]);
+			Longitude longitude = new Longitude(degrees, minutes, seconds);
+
+			Altitude altitude = new Altitude(Double.parseDouble(coor[2]));
+
+			CoordinateWorld3D position = new CoordinateWorld3D(latitude, longitude, altitude);
+			Course course = new Course(Double.parseDouble(words[7]));
+			Groundspeed speed = new Groundspeed(Double.parseDouble(words[9]));
+			theCommand = new CommandActorSetState(managers, cmd, id, position, course, speed);
 		}
 
 		public static void CommandMiscExit(String cmd) {
