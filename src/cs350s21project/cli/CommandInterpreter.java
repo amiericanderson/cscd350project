@@ -2,26 +2,10 @@ package cs350s21project.cli;
 
 import cs350s21project.controller.CommandManagers;
 import cs350s21project.controller.command.*;
-import cs350s21project.controller.command.actor.CommandActorLoadMunition;
-import cs350s21project.controller.command.actor.CommandActorDeployMunition;
-import cs350s21project.controller.command.actor.CommandActorSetCourse;
-import cs350s21project.controller.command.actor.CommandActorSetSpeed;
-import cs350s21project.controller.command.actor.CommandActorCreateActor;
-import cs350s21project.controller.command.actor.CommandActorDefineShip;
-import cs350s21project.controller.command.actor.CommandActorSetAltitudeDepth;
-import cs350s21project.controller.command.misc.CommandMiscExit;
-import cs350s21project.controller.command.misc.CommandMiscLoad;
-import cs350s21project.controller.command.misc.CommandMiscPause;
-import cs350s21project.controller.command.misc.CommandMiscSetUpdate;
-import cs350s21project.controller.command.misc.CommandMiscResume;
-import cs350s21project.controller.command.munition.A_CommandMunition;
-import cs350s21project.controller.command.munition.CommandMunitionDefineBomb;
-import cs350s21project.controller.command.munition.CommandMunitionDefineDepthCharge;
-import cs350s21project.controller.command.munition.CommandMunitionDefineShell;
-import cs350s21project.controller.command.sensor.CommandSensorDefineRadar;
-import cs350s21project.controller.command.sensor.CommandSensorDefineThermal;
-import cs350s21project.controller.command.sensor.CommandSensorDefineSonarActive;
-import cs350s21project.controller.command.sensor.CommandSensorDefineSonarPassive;
+import cs350s21project.controller.command.actor.*;
+import cs350s21project.controller.command.misc.*;
+import cs350s21project.controller.command.munition.*;
+import cs350s21project.controller.command.sensor.*;
 import cs350s21project.controller.command.view.A_CommandViewCreate;
 import cs350s21project.controller.command.view.CommandViewCreateWindowTop;
 import cs350s21project.controller.command.view.CommandViewDeleteWindow;
@@ -210,10 +194,9 @@ public class CommandInterpreter {
 			else if(cmd.contains("munition missile")) {
 				CommandMunitionDefineMissile(cmd);
 			}
-			else if(cmd.contains("define ship") && ("with munition")) {
+			else if(cmd.contains("define ship") && cmd.contains("with munition")) {
 				CommandActorDefineShip(cmd);
 			}
-
 		}
 
 
