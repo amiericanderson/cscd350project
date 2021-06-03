@@ -57,58 +57,58 @@ public class CommandInterpreter {
 			int topViewSize = Integer.parseInt(words[6]);
 
 			String lat1 = words[7].substring(1);
-			String[] lat1Split1 = lat1.split("//*");
+			String[] lat1Split1 = lat1.split("\\*");
 			int lat1Degrees = Integer.parseInt(lat1Split1[0]);
-			String[] lat1Split2 = lat1Split1[1].split("//'");
+			String[] lat1Split2 = lat1Split1[1].split("'");
 			int lat1Minutes = Integer.parseInt(lat1Split2[0]);
-			String[] lat1Split3 = lat1Split2[1].split("//");
-			double lat1Seconds = Double.valueOf(lat1Split3[0]);
+			String[] lat1Split3 = lat1Split2[1].split("\"");
+			double lat1Seconds = Double.valueOf(lat1Split3[0].substring(0,lat1Split3[0].length()-1));
 			Latitude latitude1 = new Latitude(lat1Degrees, lat1Minutes, lat1Seconds);
 
 			String lat2 = words[8];
-			String[] lat2Split1 = lat2.split("//*");
+			String[] lat2Split1 = lat2.split("\\*");
 			int lat2Degrees = Integer.parseInt(lat2Split1[0]);
-			String[] lat2Split2 = lat2Split1[1].split("//'");
+			String[] lat2Split2 = lat2Split1[1].split("'");
 			int lat2Minutes = Integer.parseInt(lat2Split2[0]);
-			String[] lat2Split3 = lat2Split2[1].split("//");
-			double lat2Seconds = Double.valueOf(lat2Split3[0]);
+			String[] lat2Split3 = lat2Split2[1].split("\"");
+			double lat2Seconds = Double.valueOf(lat2Split3[0].substring(0,lat2Split3[0].length()-1));
 			Latitude latitude2 = new Latitude(lat2Degrees, lat2Minutes, lat2Seconds);
 
 			String lat3 = words[9].substring(0, words[9].length()-1);
-			String[] lat3Split1 = lat3.split("//*");
+			String[] lat3Split1 = lat3.split("\\*");
 			int lat3Degrees = Integer.parseInt(lat3Split1[0]);
-			String[] lat3Split2 = lat3Split1[1].split("//'");
+			String[] lat3Split2 = lat3Split1[1].split("'");
 			int lat3Minutes = Integer.parseInt(lat3Split2[0]);
-			String[] lat3Split3 = lat3Split2[1].split("//");
-			double lat3Seconds = Double.valueOf(lat3Split3[0]);
+			String[] lat3Split3 = lat3Split2[1].split("\"");
+			double lat3Seconds = Double.valueOf(lat3Split3[0].substring(0,lat3Split3[0].length()-1));
 			Latitude latitude3 = new Latitude(lat3Degrees, lat3Minutes, lat3Seconds);
 
 
 			String long1 = words[10].substring(1);
-			String[] long1Split1 = long1.split("//*");
+			String[] long1Split1 = long1.split("\\*");
 			int long1Degrees = Integer.parseInt(long1Split1[0]);
-			String[] long1Split2 = long1Split1[1].split("//'");
+			String[] long1Split2 = long1Split1[1].split("'");
 			int long1Minutes = Integer.parseInt(long1Split2[0]);
-			String[] long1Split3 = long1Split2[1].split("//");
-			double long1Seconds = Double.valueOf(long1Split3[0]);
+			String[] long1Split3 = long1Split2[1].split("\"");
+			double long1Seconds = Double.valueOf(long1Split3[0].substring(0,long1Split3[0].length()-1));
 			Longitude longitude1 = new Longitude(long1Degrees, long1Minutes, long1Seconds);
 
 			String long2 = words[11];
-			String[] long2Split1 = long2.split("//*");
+			String[] long2Split1 = long2.split("\\*");
 			int long2Degrees = Integer.parseInt(long2Split1[0]);
-			String[] long2Split2 = long2Split1[1].split("//'");
+			String[] long2Split2 = long2Split1[1].split("'");
 			int long2Minutes = Integer.parseInt(long2Split2[0]);
-			String[] long2Split3 = long2Split2[1].split("//");
-			double long2Seconds = Double.valueOf(long2Split3[0]);
+			String[] long2Split3 = long2Split2[1].split("\"");
+			double long2Seconds = Double.valueOf(long2Split3[0].substring(0,long2Split3[0].length()-1));
 			Longitude longitude2 = new Longitude(long2Degrees, long2Minutes, long2Seconds);
 
 			String long3 = words[12].substring(0, words[12].length()-1);
-			String[] long3Split1 = long3.split("//*");
+			String[] long3Split1 = long3.split("\\*");
 			int long3Degrees = Integer.parseInt(long3Split1[0]);
-			String[] long3Split2 = long3Split1[1].split("//'");
+			String[] long3Split2 = long3Split1[1].split("'");
 			int long3Minutes = Integer.parseInt(long3Split2[0]);
-			String[] long3Split3 = long3Split2[1].split("//");
-			double long3Seconds = Double.valueOf(long3Split3[0]);
+			String[] long3Split3 = long3Split2[1].split("\"");
+			double long3Seconds = Double.valueOf(long3Split3[0].substring(0,long3Split3[0].length()-1));
 			Longitude longitude3 = new Longitude(long3Degrees, long3Minutes, long3Seconds);
 
 			theCommand = new CommandViewCreateWindowTop(managers, cmd, id, topViewSize, latitude1, latitude2, latitude3, longitude1, longitude2, longitude3);
