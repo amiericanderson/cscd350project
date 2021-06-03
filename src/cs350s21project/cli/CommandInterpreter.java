@@ -25,6 +25,7 @@ import cs350s21project.controller.command.sensor.CommandSensorDefineSonarPassive
 import cs350s21project.controller.command.view.A_CommandViewCreate;
 import cs350s21project.controller.command.view.CommandViewCreateWindowTop;
 import cs350s21project.controller.command.view.CommandViewDeleteWindow;
+import cs350s21project.datatype.*;
 
 import java.awt.*;
 
