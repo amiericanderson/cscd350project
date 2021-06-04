@@ -319,9 +319,13 @@ public class CommandInterpreter {
 		//define ship id1 with munition[s] (idn+)
     		public static void CommandActorDefineShip(String cmd) {
     			String[] words = cmd.split(" ");
-    			AgentID id1 = new AgentID(words[1]);
-    			AgentID idn = new AgentID(words[4]);
-    			theCommand = new CommandActorDefineShip(managers, cmd, id1, null);
+    			AgentID id1 = new AgentID(words[2]);
+    			List idn = new List(5);
+    			for (int i = 5; i < words.length; i++) {
+    				AgentID temp = new AgentID(words[i]);
+    				idn.add(String.valueOf(temp));
+    			}
+    			theCommand = new CommandActorDefineShip(managers, cmd, id1, (java.util.List<AgentID>) idn);
 				managers.schedule(theCommand);
     		}
 
