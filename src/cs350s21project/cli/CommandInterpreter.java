@@ -206,9 +206,9 @@ public class CommandInterpreter {
     	//define sensor sonar active id with power power sensitivity sensitivity
     	public static void CommandSensorDefineSonarActive(String cmd) {
     		String[] words = cmd.split(" ");
-    		AgentID id = new AgentID(words[3]);
-    		Power power = new Power(Double.valueOf(words[10]));
-    		Sensitivity sensitivity = new Sensitivity(Double.parseDouble(words[6]));
+    		AgentID id = new AgentID(words[4]);
+    		Power power = new Power(Double.valueOf(words[7]));
+    		Sensitivity sensitivity = new Sensitivity(Double.parseDouble(words[9]));
     		theCommand = new CommandSensorDefineSonarActive(managers, cmd, id, power, sensitivity);
 			managers.schedule(theCommand);
     	}
@@ -216,8 +216,8 @@ public class CommandInterpreter {
 	//define sensor sonar passive id with sensitivity sensitivity
     	public static void CommandSensorDefineSonarPassive(String cmd) {
     		String[] words = cmd.split(" ");
-    		AgentID id = new AgentID(words[3]);
-    		Sensitivity sensitivity = new Sensitivity(Double.parseDouble(words[6]));
+    		AgentID id = new AgentID(words[4]);
+    		Sensitivity sensitivity = new Sensitivity(Double.parseDouble(words[7]));
     		theCommand = new CommandSensorDefineSonarPassive(managers, cmd, id, sensitivity);
 			managers.schedule(theCommand);
     	}
@@ -361,7 +361,7 @@ public class CommandInterpreter {
     	public static void CommandActorSetCourse(String cmd) {
     		String[] words = cmd.split(" ");
     		AgentID id = new AgentID(words[1]);
-    		Course course = new Course(Double.parseDouble(words[7]));
+    		Course course = new Course(Double.parseDouble(words[3]));
     		theCommand = new CommandActorSetCourse(managers, cmd, id, course);
 			managers.schedule(theCommand);
     	}
@@ -370,7 +370,7 @@ public class CommandInterpreter {
     	public static void CommandActorSetSpeed(String cmd) {
     		String[] words = cmd.split(" ");
     		AgentID id = new AgentID(words[1]);
-    		Groundspeed speed = new Groundspeed(Double.parseDouble(words[9]));
+    		Groundspeed speed = new Groundspeed(Double.parseDouble(words[3]));
     		theCommand = new CommandActorSetSpeed(managers, cmd, id, speed);
 			managers.schedule(theCommand);
     	}
@@ -379,7 +379,7 @@ public class CommandInterpreter {
     	public static void CommandActorSetAltitudeDepth(String cmd) {
     		String[] words = cmd.split(" ");
     		AgentID id = new AgentID(words[1]);
-    		Altitude altitude = new Altitude(Double.parseDouble(words[7]));
+    		Altitude altitude = new Altitude(Double.parseDouble(words[3]));
     		theCommand = new CommandActorSetAltitudeDepth(managers, cmd, id, altitude);
 			managers.schedule(theCommand);
     	}
@@ -443,7 +443,7 @@ public class CommandInterpreter {
 	//set update time
     	public static void CommandMiscSetUpdate(String cmd) {
     		String[] words = cmd.split(" ");
-    		Time time = new Time(Double.parseDouble(words[1]));
+    		Time time = new Time(Double.parseDouble(words[2]));
     		theCommand = new CommandMiscSetUpdate(managers,cmd, time);
 			managers.schedule(theCommand);
     	}
